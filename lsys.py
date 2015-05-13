@@ -13,33 +13,34 @@ def lsys(s, rules):
                 break;
         if stk:
             out.append(stk[0])
-            stk = stk[1:]
+            stk.pop(0)
     return "".join(out)
 
 i = "A"
-iterations = 9
+iterations = 16
 for x in xrange(iterations):
     print x,'th iteration start'
     #i = lsys(i, {"A": "F[B+[-B+A]]", "B": "-A+F[+A][-F]"})
+    i = lsys(i, {"A": "A+BF+", "B": "-FA-B"})
 
 print i
 ez = EZDraw()
-#ez.pos = (ez.w/2,ez.h - 50)
+#ez.pos = (ez.w-50,ez.h - 50)
 nth = 0
 stk = []
 for sym in i:
     if sym == 'F':
-        ez.forward(10.0)
+        ez.forward(1.5)
     elif sym == '-':
-        ez.left(pi/10)
+        ez.left(pi/2)
     elif sym == '+':
-        ez.right(pi/10)
+        ez.right(pi/2)
     elif sym == '[':
         stk.append((ez.pos, ez.angle))
     elif sym == ']':
         ez.pos, ez.angle = stk.pop()
     nth += 1
-    if nth % 16 == 0:
+    if nth % 256 == 0:
         ez.update(0)
 
 print "done"
