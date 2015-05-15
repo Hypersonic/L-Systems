@@ -17,7 +17,6 @@ def lsys(s, rules):
     return "".join(out)
 
 def lsys_single_len_keys(s, rules):
-    import multiprocessing as multi
     def f(x):
         return rules.get(x, x)
     return "".join(map(f, iter(s)))
@@ -47,7 +46,7 @@ def render(commands, ruleset={'forward_dist':10.0, 'angle':pi/2}):
     return ez
 
 i = "A"
-iterations = 20
+iterations = 23
 for x in xrange(iterations):
     print x,'th iteration start'
     #i = lsys(i, {"A": "F[B+[-B+A]]", "B": "-A+F[+A][-F]"})
