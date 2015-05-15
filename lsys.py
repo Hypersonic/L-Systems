@@ -42,16 +42,14 @@ iterations = 10
 for x in xrange(iterations):
     print x,'th iteration start'
     #i = lsys(i, {"A": "F[B+[-B+A]]", "B": "-A+F[+A][-F]"})
-    #i = lsys(i, {"A": "A+BF+", "B": "-FA-B"}) # dragon curve
-    i = lsys(i, {"A": "B[-FA]", "B": "FA[+B]"})
+    i = lsys(i, {"A": "A+BF+", "B": "-FA-B"}) # dragon curve
+    #i = lsys(i, {"A": "B[-FA]", "B": "FA[+B]"})
 
 
 print "done"
 
-ruleset = {
-            'forward_dist': 5.0,
-            'angle': pi/5
-        }
+ruleset = {'forward_dist': 2.0, 'angle': pi/2} # dragon curve
+#ruleset = { 'forward_dist': 5.0, 'angle': pi/5}
 
 print i
 ez = render(i, ruleset)
