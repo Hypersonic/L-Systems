@@ -16,10 +16,17 @@ def lsys(s, rules):
             stk.pop(0)
     return "".join(out)
 
+def lsys_single_len_keys(s, rules):
+    import multiprocessing as multi
+    def f(x):
+        return rules.get(x, x)
+    return "".join(map(f, iter(s)))
+
 def render(commands, ruleset={'forward_dist':10.0, 'angle':pi/2}):
-    ez = EZDraw()
+    ez = EZDraw(w=1000, h=1000)
     #ez.pos = (ez.w-50,ez.h - 50)
     nth = 0
+    kth = 1
     stk = []
     for sym in commands:
         if sym == 'F':
@@ -33,25 +40,28 @@ def render(commands, ruleset={'forward_dist':10.0, 'angle':pi/2}):
         elif sym == ']':
             ez.pos, ez.angle = stk.pop()
         nth += 1
-        if nth % 256 == 0:
+        if nth % round(kth) == 0:
+            kth *= 1.1
+            print kth
             ez.update(0)
     return ez
 
 i = "A"
-iterations = 10
+iterations = 20
 for x in xrange(iterations):
     print x,'th iteration start'
     #i = lsys(i, {"A": "F[B+[-B+A]]", "B": "-A+F[+A][-F]"})
-    i = lsys(i, {"A": "A+BF+", "B": "-FA-B"}) # dragon curve
+    i = lsys_single_len_keys(i, {"A": "A+BF+", "B": "-FA-B"}) # dragon curve
     #i = lsys(i, {"A": "B[-FA]", "B": "FA[+B]"})
 
 
 print "done"
 
-ruleset = {'forward_dist': 2.0, 'angle': pi/2} # dragon curve
+ruleset = {'forward_dist': 1.0, 'angle': pi/2} # dragon curve
 #ruleset = { 'forward_dist': 5.0, 'angle': pi/5}
 
 print i
 ez = render(i, ruleset)
+print "done rendering"
 while True:
     ez.update(0)
