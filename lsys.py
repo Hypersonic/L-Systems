@@ -17,9 +17,10 @@ def lsys(s, rules):
     return "".join(out)
 
 def lsys_single_len_keys(s, rules):
+    from itertools import imap
     def f(x):
         return rules.get(x, x)
-    return "".join(map(f, iter(s)))
+    return "".join(imap(f, iter(s)))
 
 def render(commands, ruleset={'forward_dist':10.0, 'angle':pi/2}):
     ez = EZDraw(w=1000, h=1000)
